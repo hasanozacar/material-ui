@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { expect } from 'chai';
 import { createMount, getClasses } from '@material-ui/core/test-utils';
 import describeConformance from '@material-ui/core/test-utils/describeConformance';
@@ -15,6 +15,7 @@ describe('<Autocomplete />', () => {
   const render = createClientRender();
   const defaultProps = {
     options: [],
+    openOnFocus: true,
   };
 
   before(() => {
@@ -465,20 +466,20 @@ describe('<Autocomplete />', () => {
     });
   });
 
-  describe('prop: disableOpenOnFocus', () => {
-    it('disables open on input focus', () => {
+  describe('prop: openOnFocus', () => {
+    it('enables open on input focus', () => {
       const { getByRole } = render(
         <Autocomplete
           {...defaultProps}
           options={['one', 'two', 'three']}
-          disableOpenOnFocus
+          openOnFocus
           renderInput={params => <TextField {...params} autoFocus />}
         />,
       );
       const textbox = getByRole('textbox');
       const combobox = getByRole('combobox');
 
-      expect(combobox).to.have.attribute('aria-expanded', 'false');
+      expect(combobox).to.have.attribute('aria-expanded', 'true');
       expect(textbox).to.have.focus;
 
       fireEvent.mouseDown(textbox);
@@ -491,7 +492,7 @@ describe('<Autocomplete />', () => {
 
       fireEvent.mouseDown(textbox);
       fireEvent.click(textbox);
-      expect(combobox).to.have.attribute('aria-expanded', 'false');
+      expect(combobox).to.have.attribute('aria-expanded', 'true');
       expect(textbox).to.have.focus;
 
       fireEvent.mouseDown(textbox);

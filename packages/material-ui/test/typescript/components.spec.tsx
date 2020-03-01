@@ -613,9 +613,8 @@ const MenuTest = () => {
         // 'false' is not assignable to true | undefined
         button={false} // $ExpectError
         ref={elem => {
-          // previous error throws type checker off. Since this is an error anyway
-          // `any` is fine
-          elem; // $ExpectType any
+          // inferred from `button={false}` instead of `action`
+          elem; // $ExpectType HTMLLIElement | null
         }}
       />
     </Menu>
@@ -795,12 +794,12 @@ const StepperTest = () =>
       };
       return (
         <MobileStepper
+          {...defaultProps}
           variant="dots"
           steps={6}
           position="static"
           activeStep={this.state.activeStep}
           className={classes.root}
-          {...defaultProps}
         />
       );
     }
