@@ -784,7 +784,7 @@ export default function useAutocomplete(props) {
 
   const handleInputMouseDown = event => {
     const doc = ownerDocument(inputRef.current);
-    if (inputValue === '' && (!disableOpenOnFocus || inputRef.current === doc.activeElement)) {
+    if (inputValue === undefined && (!disableOpenOnFocus || inputRef.current === doc.activeElement)) {
       handlePopupIndicator(event);
     }
   };
